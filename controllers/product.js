@@ -40,7 +40,10 @@ exports.getProductById = async (req, res) => {
  */
 exports.createProduct = async (req, res) => {
   try {
-    const newProduct = await Product.create(req.body);
+    const newProduct = await Product.create({
+      ...req.body, 
+      UserId: req.user.id, // <-- Attach the logged-in user's ID here
+    });
     return res.status(201).json(newProduct);
   } catch (error) {
     console.error('CREATE PRODUCT ERROR:', error);
